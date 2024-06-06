@@ -44,7 +44,9 @@ macro_rules! conditional_format {
 
 impl GpuStatusData {
     pub(crate) fn compute_mem_usage(&self) -> Option<u8> {
-        if let (Some(mem_used), Some(mem_total)) = (self.mem_used, self.mem_total) {
+        if let (Some(mem_used), Some(mem_total)) =
+            (self.mem_used, self.mem_total)
+        {
             Some((mem_used / mem_total * 100f64).round() as u8)
         } else {
             None
@@ -54,13 +56,13 @@ impl GpuStatusData {
     pub fn get_text(&self) -> String {
         let mut text = String::new();
 
+        conditional_format!(text, "{}°C", self.temp);
+        text.push('|');
+        conditional_format!(text, "{}%", self.fan_speed);
+        text.push('|');
         conditional_format!(text, "{}%", self.gpu_util);
         text.push('|');
         conditional_format!(text, "{}%", self.compute_mem_usage());
-        text.push('|');
-        conditional_format!(text, "{}%", self.temp);
-        text.push('|');
-        conditional_format!(text, "{}%", self.fan_speed);
 
         text
     }

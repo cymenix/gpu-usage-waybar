@@ -1,6 +1,8 @@
 use crate::gpu_status::{GpuStatus, GpuStatusData, PState};
 use color_eyre::eyre::Result;
-use nvml_wrapper::enum_wrappers::device::{PcieUtilCounter, PerformanceState, TemperatureSensor};
+use nvml_wrapper::enum_wrappers::device::{
+    PcieUtilCounter, PerformanceState, TemperatureSensor,
+};
 use nvml_wrapper::{Device, Nvml};
 
 pub struct NvidiaGpuStatus<'a> {
@@ -27,7 +29,8 @@ impl GpuStatus for NvidiaGpuStatus<'_> {
             mem_used: memory_info_in_bytes
                 .clone()
                 .map(|m| m.used as f64 / 1024f64 / 1024f64), // convert to MiB from B
-            mem_total: memory_info_in_bytes.map(|m| m.total as f64 / 1024f64 / 1024f64),
+            mem_total: memory_info_in_bytes
+                .map(|m| m.total as f64 / 1024f64 / 1024f64),
             mem_util: utilization_rates.map(|u| u.memory as u8),
             dec_util: device
                 .decoder_utilization()
