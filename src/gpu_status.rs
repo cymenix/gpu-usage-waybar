@@ -57,6 +57,10 @@ impl GpuStatusData {
         conditional_format!(text, "{}%", self.gpu_util);
         text.push('|');
         conditional_format!(text, "{}%", self.compute_mem_usage());
+        text.push('|');
+        conditional_format!(text, "{}%", self.temp);
+        text.push('|');
+        conditional_format!(text, "{}%", self.fan_speed);
 
         text
     }
