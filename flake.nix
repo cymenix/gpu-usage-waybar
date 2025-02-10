@@ -45,7 +45,8 @@
         ];
       in {
         packages = {
-          default = pkgs.rustPlatform.buildRustPackage {
+          default = self.packages.${system}.gpu-usage-waybar;
+          gpu-usage-waybar = pkgs.rustPlatform.buildRustPackage {
             pname = "gpu-usage-waybar";
             version = "0.1.2";
             src = ./.;
